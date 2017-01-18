@@ -1,0 +1,9 @@
+- name: Ensure npm global packages are at the latest release.
+  npm:
+    name: "{{ item.name }}"
+    version: "{{ item.version | default('latest') }}"
+    global: yes
+    state: latest
+  become: yes
+  become_user: {{ default_user }}
+  with_items: "{{ npm_global_packages }}"

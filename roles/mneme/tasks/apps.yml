@@ -1,0 +1,27 @@
+- name: get spacemacs
+  git:
+    repo: "{{ spacemacs_repository }}"
+    version: "{{ spacemacs_branch }}"
+    dest: "{{ default_home }}/.emacs.d"
+  become: yes
+  become_user: "{{ default_user}}"
+
+- name: get oh-my-fish
+  git:
+    repo: https://github.com/oh-my-fish/oh-my-fish.git
+    dest: "{{ default_home }}/oh-my-fish"
+  become: yes
+  become_user: "{{ default_user }}"
+
+- name: install oh-my-fish
+  command: ./bin/install --noninteractive --yes
+  args:
+    chdir: /home/{{ default_user }}/oh-my-fish
+    creates: "{{ default_home }}/.local/share/omf"
+  become: yes
+  become_user: "{{ default_user }}"
+
+- name: remove oh-my-fish repo
+  file:
+    state: absent
+    path: "{{ default_home }}/oh-my-fish"

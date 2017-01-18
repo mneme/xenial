@@ -1,0 +1,11 @@
+- name: creating user
+  user:
+    name: "{{ default_user }}"
+    password: "{{default_password}}"
+    shell: /usr/bin/fish
+    groups: sudo
+    append: yes
+
+- include: dotfiles.yml
+- include: apps.yml
+- include: fonts.yml

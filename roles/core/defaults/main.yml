@@ -1,0 +1,24 @@
+core_packages:
+    - python3
+    - fish
+    - ruby
+    - xfce4
+    - virtualbox-guest-dkms
+    - virtualbox-guest-utils
+    - virtualbox-guest-x11
+    - feh
+    - lxterminal
+    - rxvt-unicode-256color
+    - xfonts-terminus
+    - git
+    - i3
+    - google-chrome-stable
+    - rofi
+    - i3blocks
+    - i3lock
+    - i3status
+
+core_repositories:
+    - ppa:fish-shell/release-2
+    - deb http://debian.sur5r.net/i3/ xenial universe
+    - deb http://dl.google.com/linux/chrome/deb/ stable main

@@ -1,0 +1,17 @@
+default_user: mneme
+default_password: $6$TWkONZB4JcYv$gzh8VE50JHy3h6dEvPmABguzhztzxZt062VR1s77/zw1NrdfJsGSUN/dI9NCHIgs1HylwLaTASlroBiKXwS/A1
+default_home: /home/{{ default_user }}
+
+
+dotfiles_repo: "https://github.com/mneme/dotfiles.git"
+dotfiles_repo_local_destination: "/home/{{ default_user }}/.dotfiles"
+dotfiles_files:
+  - .config
+  - .spacemacs
+  - .Xresources
+  - .inputrc
+  - .xinitrc
+
+npm_global_packages:
+    - typescript
+    - gulp

@@ -1,0 +1,28 @@
+- name: add extra repositories
+  apt_repository:
+    repo: "{{ item }}"
+  with_items:
+    - "{{ core_repositories }}"
+
+- name: install sur5r-keyring
+  apt:
+    name: sur5r-keyring
+    state: present
+    update_cache: yes
+    allow_unauthenticated: yes
+
+- name: add chrome key.
+  apt_key:
+    url: "https://dl-ssl.google.com/linux/linux_signing_key.pub"
+    state: present
+
+- name: install core packages
+  apt:
+    name: "{{ item }}"
+    state: present
+    update_cache: yes
+  with_items:
+    - "{{ core_packages }}"
+
+- name: set locale
+  shell: localectl set-locale LANG=en_US.UTF8

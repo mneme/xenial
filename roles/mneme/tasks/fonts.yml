@@ -1,0 +1,53 @@
+- name: get powerline fonts
+  git:
+    repo: https://github.com/powerline/fonts.git
+    dest: "{{ default_home }}/powerline"
+  become: yes
+  become_user: "{{ default_user }}"
+
+- name: install powerline fonts
+  command: ./install.sh
+  args:
+    chdir: "{{ default_home }}/powerline"
+  become: yes
+  become_user: "{{ default_user }}"
+
+- name: remove powerline repo
+  file:
+    state: absent
+    path: "{{ default_home }}/powerline"
+
+
+- name: get SanFransisco fonts
+  git:
+    repo: https://github.com/supermarin/YosemiteSanFranciscoFont.git
+    dest: "{{ default_home }}/YosemiteSanFranciscoFont"
+  become: yes
+  become_user: "{{ default_user }}"
+
+- name: install SanFransisco fonts
+  shell: cp -v {{default_home}}/YosemiteSanFranciscoFont/*.ttf {{default_home}}/.local/share/fonts/
+  become: yes
+  become_user: "{{ default_user }}"
+
+- name: remove SanFransisco repo
+  file:
+    state: absent
+    path: "{{ default_home }}/YosemiteSanFranciscoFont"
+
+- name: get Font-Awesome fonts
+  git:
+    repo: https://github.com/FortAwesome/Font-Awesome.git
+    dest: "{{ default_home }}/Font-Awesome"
+  become: yes
+  become_user: "{{ default_user }}"
+
+- name: install Font-Awesome fonts
+  shell: cp -v {{default_home}}/Font-Awesome/fonts/*.ttf {{default_home}}/.local/share/fonts/
+  become: yes
+  become_user: "{{ default_user }}"
+
+- name: remove Font-Awesome repo
+  file:
+    state: absent
+    path: "{{ default_home }}/Font-Awesome"

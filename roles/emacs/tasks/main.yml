@@ -1,0 +1,59 @@
+- name: install build tools.
+  apt:
+    name: build-essential
+    update_cache: yes
+    state: present
+
+- name: add sources
+  apt_repository:
+    repo: deb-src http://us.archive.ubuntu.com/ubuntu xenial main restricted universe
+    state: present
+
+
+- name: install build deps
+  apt:
+    name: emacs24
+    update_cache: yes
+    state: build-dep
+
+- name: downloading emacs
+  become: yes
+  become_user: root
+  get_url:
+    url: "{{emacs_build_url}}"
+    dest: /tmp/{{emacs_build_tgz}}
+    timeout: "{{emacs_build_timeout_seconds}}"
+    mode: 0644
+
+- name: unarchiving emacs
+  become: yes
+  become_user: root
+  unarchive:
+    copy: no
+    src: /tmp/{{emacs_build_tgz}}
+    dest: /opt
+    creates: /opt/{{emacs_name}}
+
+- name: configuring emacs
+  become: yes
+  become_user: root
+  command: ./configure
+  args:
+    chdir: /opt/{{emacs_name}}
+    creates: /opt/{{emacs_name}}/Makefile
+
+- name: building emacs
+  become: yes
+  become_user: root
+  command: make
+  args:
+    chdir: /opt/{{emacs_name}}
+    creates: /opt/{{emacs_name}}/src/emacs
+
+- name: installing emacs
+  become: yes
+  become_user: root
+  command: make install
+  args:
+    chdir: /opt/{{emacs_name}}
+    creates: /usr/local/bin/emacs
